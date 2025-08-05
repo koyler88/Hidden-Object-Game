@@ -17,6 +17,8 @@ datasource db {
 model Game {
   id              Int      @id @default(autoincrement())
   category        Category
+  name            String   @unique
+  imageUrl        String
   objectOneX      Int
   objectOneY      Int
   objectTwoX      Int
