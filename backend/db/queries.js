@@ -10,8 +10,26 @@ const getGameById = async (id) => {
   });
 };
 
+const getScoresByGameId = async (gameId) => {
+  return await prisma.score.findMany({
+    where: { gameId },
+    orderBy: { time: "asc" },
+  });
+};
+
+const postScore = async (name, time, gameId) => {
+  return await prisma.score.create({
+    data: {
+      gameId,
+      time,
+      playerName: name,
+    },
+  });
+};
+
 module.exports = {
   getGameInfo,
   getGameById,
-  
+  getScoresByGameId,
+  postScore,
 };

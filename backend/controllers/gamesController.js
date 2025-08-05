@@ -12,8 +12,8 @@ const getGameInfo = async (req, res) => {
 
 const getGameById = async (req, res) => {
   try {
-    const id = Number(req.params.id);
-    if (isNaN(id)) return res.status(400).json({ error: "Invalid game ID" });
+    const gameId = Number(req.params.gameId);
+    if (isNaN(gameId)) return res.status(400).json({ error: "Invalid game ID" });
 
     const game = await db.getGameById(id);
     if (!game) {
