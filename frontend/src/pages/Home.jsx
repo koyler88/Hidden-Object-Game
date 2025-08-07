@@ -10,7 +10,7 @@ function Home() {
     fetchGames()
       .then((data) => setGames(data))
       .catch((err) => console.error(err));
-  });
+  }, []);
 
   return (
     <div className="homepage">
@@ -30,18 +30,32 @@ function Home() {
           ))}
         </div>
 
-        <button
-          className="play-button"
-          disabled={!selectedGameId}
-          onClick={() => {
-            // redirect to game page (e.g. `/game/:id`)
-            if (selectedGameId) {
-              window.location.href = `/game/${selectedGameId}`;
-            }
-          }}
-        >
-          Play
-        </button>
+        <div className="button-group" style={{ marginTop: "1rem" }}>
+          <button
+            className="play-button"
+            disabled={!selectedGameId}
+            onClick={() => {
+              if (selectedGameId) {
+                window.location.href = `/game/${selectedGameId}`;
+              }
+            }}
+          >
+            Play
+          </button>
+
+          <button
+            className="leaderboard-button"
+            disabled={!selectedGameId}
+            onClick={() => {
+              if (selectedGameId) {
+                window.location.href = `/leaderboard/${selectedGameId}`;
+              }
+            }}
+            style={{ marginLeft: "1rem" }}
+          >
+            Leaderboard
+          </button>
+        </div>
       </main>
 
       <footer className="footer">
