@@ -6,7 +6,7 @@ export async function getGame(id) {
     return res.json()
 }
 
-export async function getGames() {
+export async function fetchGames() {
     const res = await fetch(`${BASE_URL}/games`);
     if (!res.ok) throw new Error("Failed to fetch games");
     return res.json()
