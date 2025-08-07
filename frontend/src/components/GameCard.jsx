@@ -3,9 +3,10 @@ function GameCard({ game, selected, onSelect }) {
     <div
       className={`game-card ${selected ? 'selected' : ''}`}
       onClick={onSelect}
+      style={{ cursor: 'pointer' }}
     >
-      <img src={game.thumbnail} alt={game.name} />
-      <p>{game.name}</p>
+      <img src={game.imageUrl} alt={game.name} width={200} height={200} />
+      <h3>{game.name}</h3>
     </div>
   );
 }
