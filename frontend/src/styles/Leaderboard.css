@@ -1,0 +1,21 @@
+.leaderboard-page {
+  padding: 2rem;
+  text-align: center;
+}
+
+.leaderboard-page table {
+  margin: 1rem auto;
+  border-collapse: collapse;
+  width: 80%;
+}
+
+.leaderboard-page th,
+.leaderboard-page td {
+  border: 1px solid #ddd;
+  padding: 0.5rem 1rem;
+}
+
+.leaderboard-page th {
+  background-color: #3498db;
+  color: white;
+}
