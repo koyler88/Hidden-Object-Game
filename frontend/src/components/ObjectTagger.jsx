@@ -33,6 +33,8 @@ function ObjectTagger({ imageUrl, objects = [], onFound, foundObjects = [] }) {
     if (match && !foundObjects.includes(match.name)) {
       onFound(match.name);
       setFoundMarkers((prev) => [...prev, { x: clickData.pxX, y: clickData.pxY }]);
+    } else if (!match) {
+      alert("Incorrect! Try again.");
     }
 
     setClickData(null);

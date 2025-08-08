@@ -19,8 +19,8 @@ const postScore = async (req, res) => {
   try {
     const { name, time, gameId } = req.body;
 
-    if (!name || !time || !gameId) {
-      return res.status(400).json({ error: "Missing required fields" });
+    if (!name || typeof time !== 'number' || !gameId) {
+      return res.status(400).json({ error: "Missing or invalid fields" });
     }
 
     const postedScore = await db.postScore(name, time, gameId);
