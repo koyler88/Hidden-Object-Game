@@ -13,3 +13,18 @@
   height: auto;
   border: 2px solid #ccc;
 }
+
+.preview-images {
+  display: flex;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+
+.preview-item {
+  text-align: center;
+}
+
+.preview-image {
+  width: 60px;
+  height: auto;
+}

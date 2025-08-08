@@ -35,15 +35,45 @@ function Game() {
   if (!game) return <p>Game not found.</p>;
 
   const objects = [
-    { name: "Object One", x: game.objectOneX, y: game.objectOneY },
-    { name: "Object Two", x: game.objectTwoX, y: game.objectTwoY },
-    { name: "Object Three", x: game.objectThreeX, y: game.objectThreeY },
+    {
+      name: game.objectOneName,
+      x: game.objectOneX,
+      y: game.objectOneY,
+      imageUrl: game.objectOneUrl,
+    },
+    {
+      name: game.objectTwoName,
+      x: game.objectTwoX,
+      y: game.objectTwoY,
+      imageUrl: game.objectTwoUrl,
+    },
+    {
+      name: game.objectThreeName,
+      x: game.objectThreeX,
+      y: game.objectThreeY,
+      imageUrl: game.objectThreeUrl,
+    },
   ];
 
   return (
     <div className="game-page">
       <h2>{game.name}</h2>
-      <p>Find the hidden objects!</p>
+
+      <div className="object-preview">
+        <h3>Find the hidden objects!</h3>
+        <div className="preview-images">
+          {objects.map((obj) => (
+            <div key={obj.name} className="preview-item">
+              <img
+                src={obj.imageUrl}
+                alt={obj.name}
+                className="preview-image"
+              />
+              <p>{obj.name}</p>
+            </div>
+          ))}
+        </div>
+      </div>
 
       <ObjectTagger
         imageUrl={game.imageUrl}

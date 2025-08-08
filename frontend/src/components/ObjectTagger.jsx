@@ -3,7 +3,7 @@ import "../styles/ObjectTagger.css";
 
 function ObjectTagger({ imageUrl, objects = [], onFound }) {
   const imageRef = useRef(null);
-  const [clickPosition, setClickPosition] = useState(null);
+  const [clickData, setClickData] = useState(null); // { percentX, percentY, pxX, pxY }
   const [showDropdown, setShowDropdown] = useState(false);
   const [foundObjects, setFoundObjects] = useState([]);
 
@@ -11,38 +11,40 @@ function ObjectTagger({ imageUrl, objects = [], onFound }) {
     const img = imageRef.current;
     const rect = img.getBoundingClientRect();
 
-    const x = ((e.clientX - rect.left) / rect.width) * 100;
-    const y = ((e.clientY - rect.top) / rect.height) * 100;
+    const percentX = ((e.clientX - rect.left) / rect.width) * 100;
+    const percentY = ((e.clientY - rect.top) / rect.height) * 100;
 
-    console.log("X", x, "Y", y);
+    const pxX = e.clientX - rect.left;
+    const pxY = e.clientY - rect.top;
 
-    setClickPosition({ x, y });
+    setClickData({ percentX, percentY, pxX, pxY });
     setShowDropdown(true);
   };
 
   const handleObjectSelect = (object) => {
-    setShowDropdown(false);
+    if (!clickData) return;
 
-    // Check if user clicked close enough (within 2% range)
     const match = objects.find((obj) => {
-      const dx = Math.abs(obj.x - clickPosition.x);
-      const dy = Math.abs(obj.y - clickPosition.y);
-      return dx < 2 && dy < 2;
+      const dx = Math.abs(obj.x - clickData.percentX);
+      const dy = Math.abs(obj.y - clickData.percentY);
+      return dx < 2 && dy < 2 && obj.name === object.name;
     });
 
-    const correct = match && match.name === object.name;
-    if (correct) {
-      setFoundObjects((prev) => [...prev, object.name]);
-      onFound(object.name);
+    if (match) {
+      if (!foundObjects.includes(match.name)) {
+        setFoundObjects((prev) => [...prev, match.name]);
+        onFound(match.name); // parent handles alert
+      }
     } else {
       alert("Incorrect! Try again.");
     }
 
-    setClickPosition(null);
+    setClickData(null);
+    setShowDropdown(false);
   };
 
   return (
-    <div className="object-tagger">
+    <div className="object-tagger" style={{ position: "relative" }}>
       <img
         src={imageUrl}
         alt="Game"
@@ -51,19 +53,28 @@ function ObjectTagger({ imageUrl, objects = [], onFound }) {
         onClick={handleImageClick}
       />
 
-      {showDropdown && clickPosition && (
+      {showDropdown && clickData && (
         <div
           className="dropdown"
           style={{
-            top: `${clickPosition.y}%`,
-            left: `${clickPosition.x}%`,
+            top: `${clickData.pxY}px`,
+            left: `${clickData.pxX}px`,
+            transform: "translate(-50%, -50%)",
           }}
         >
           {objects
             .filter((obj) => !foundObjects.includes(obj.name))
-            .map((obj) => (
-              <button key={obj.name} onClick={() => handleObjectSelect(obj)}>
-                {obj.name}
+            .map((object) => (
+              <button
+                key={object.name}
+                onClick={() => handleObjectSelect(object)}
+              >
+                <img
+                  src={object.imageUrl}
+                  alt={object.name}
+                  className="dropdown-object-image"
+                />
+                {object.name}
               </button>
             ))}
         </div>
