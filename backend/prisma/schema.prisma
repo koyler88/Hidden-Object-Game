@@ -19,16 +19,23 @@ model Game {
   category        Category
   name            String   @unique
   imageUrl        String
+  objectOneName   String
   objectOneX      Int
   objectOneY      Int
+  objectOneUrl    String
+  objectTwoName   String
   objectTwoX      Int
   objectTwoY      Int
+  objectTwoUrl    String
+  objectThreeName String
   objectThreeX    Int
   objectThreeY    Int
+  objectThreeUrl  String
   createdAt       DateTime @default(now())
 
   scores          Score[]
 }
+
 
 
 model Score {
