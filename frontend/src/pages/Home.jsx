@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { fetchGames } from "../api/games";
 import GameCard from "../components/GameCard";
 
 function Home() {
   const [games, setGames] = useState([]);
   const [selectedGameId, setSelectedGameId] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     fetchGames()
@@ -36,7 +38,7 @@ function Home() {
             disabled={!selectedGameId}
             onClick={() => {
               if (selectedGameId) {
-                window.location.href = `/game/${selectedGameId}`;
+                navigate(`/game/${selectedGameId}`);
               }
             }}
           >
@@ -48,7 +50,7 @@ function Home() {
             disabled={!selectedGameId}
             onClick={() => {
               if (selectedGameId) {
-                window.location.href = `/leaderboard/${selectedGameId}`;
+                navigate(`/leaderboard/${selectedGameId}`);
               }
             }}
             style={{ marginLeft: "1rem" }}
