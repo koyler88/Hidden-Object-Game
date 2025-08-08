@@ -28,3 +28,36 @@
   width: 60px;
   height: auto;
 }
+
+.found-object {
+  opacity: 0.4;
+  position: relative;
+}
+
+.found-object::after {
+  content: "✔";
+  color: green;
+  font-size: 1.5rem;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.popup {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 128, 0, 0.9);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 6px;
+  font-size: 1rem;
+  animation: fadeout 2s forwards;
+  z-index: 9999;
+}
+
+@keyframes fadeout {
+  0% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}

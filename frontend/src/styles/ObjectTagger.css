@@ -54,3 +54,11 @@
   vertical-align: middle;
 }
 
+.marker {
+  color: limegreen;
+  font-size: 2rem;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+

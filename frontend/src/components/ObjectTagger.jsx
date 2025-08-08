@@ -1,11 +1,11 @@
 import { useRef, useState } from "react";
 import "../styles/ObjectTagger.css";
 
-function ObjectTagger({ imageUrl, objects = [], onFound }) {
+function ObjectTagger({ imageUrl, objects = [], onFound, foundObjects = [] }) {
   const imageRef = useRef(null);
-  const [clickData, setClickData] = useState(null); // { percentX, percentY, pxX, pxY }
+  const [clickData, setClickData] = useState(null);
   const [showDropdown, setShowDropdown] = useState(false);
-  const [foundObjects, setFoundObjects] = useState([]);
+  const [foundMarkers, setFoundMarkers] = useState([]);
 
   const handleImageClick = (e) => {
     const img = imageRef.current;
@@ -30,13 +30,9 @@ function ObjectTagger({ imageUrl, objects = [], onFound }) {
       return dx < 2 && dy < 2 && obj.name === object.name;
     });
 
-    if (match) {
-      if (!foundObjects.includes(match.name)) {
-        setFoundObjects((prev) => [...prev, match.name]);
-        onFound(match.name); // parent handles alert
-      }
-    } else {
-      alert("Incorrect! Try again.");
+    if (match && !foundObjects.includes(match.name)) {
+      onFound(match.name);
+      setFoundMarkers((prev) => [...prev, { x: clickData.pxX, y: clickData.pxY }]);
     }
 
     setClickData(null);
@@ -53,13 +49,26 @@ function ObjectTagger({ imageUrl, objects = [], onFound }) {
         onClick={handleImageClick}
       />
 
+      {foundMarkers.map((marker, i) => (
+        <span
+          key={i}
+          className="marker"
+          style={{
+            top: `${marker.y}px`,
+            left: `${marker.x}px`,
+            position: "absolute",
+          }}
+        >
+          ✔
+        </span>
+      ))}
+
       {showDropdown && clickData && (
         <div
           className="dropdown"
           style={{
             top: `${clickData.pxY}px`,
             left: `${clickData.pxX}px`,
-            transform: "translate(-50%, -50%)",
           }}
         >
           {objects
@@ -68,6 +77,7 @@ function ObjectTagger({ imageUrl, objects = [], onFound }) {
               <button
                 key={object.name}
                 onClick={() => handleObjectSelect(object)}
+                className="dropdown-option"
               >
                 <img
                   src={object.imageUrl}

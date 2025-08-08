@@ -9,6 +9,7 @@ function Game() {
   const [game, setGame] = useState(null);
   const [loading, setLoading] = useState(true);
   const [foundObjects, setFoundObjects] = useState([]);
+  const [popupMessage, setPopupMessage] = useState("");
 
   useEffect(() => {
     fetchGameById(id)
@@ -24,10 +25,9 @@ function Game() {
 
   const handleObjectFound = (name) => {
     if (!foundObjects.includes(name)) {
-      setFoundObjects([...foundObjects, name]);
-      alert(`✅ You found ${name}!`);
-    } else {
-      alert(`🔁 You already found ${name}.`);
+      setFoundObjects((prev) => [...prev, name]);
+      setPopupMessage(`✅ You found ${name}!`);
+      setTimeout(() => setPopupMessage(""), 2000);
     }
   };
 
@@ -63,7 +63,12 @@ function Game() {
         <h3>Find the hidden objects!</h3>
         <div className="preview-images">
           {objects.map((obj) => (
-            <div key={obj.name} className="preview-item">
+            <div
+              key={obj.name}
+              className={`preview-item ${
+                foundObjects.includes(obj.name) ? "found-object" : ""
+              }`}
+            >
               <img
                 src={obj.imageUrl}
                 alt={obj.name}
@@ -79,16 +84,10 @@ function Game() {
         imageUrl={game.imageUrl}
         objects={objects}
         onFound={handleObjectFound}
+        foundObjects={foundObjects}
       />
 
-      <div className="found-objects">
-        <h3>Found Objects:</h3>
-        <ul>
-          {foundObjects.map((obj) => (
-            <li key={obj}>{obj}</li>
-          ))}
-        </ul>
-      </div>
+      {popupMessage && <div className="popup">{popupMessage}</div>}
     </div>
   );
 }
