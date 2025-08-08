@@ -1,9 +1,11 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 function ScoreSubmissionPopup({ elapsedTime, gameId, onClose }) {
   const [playerName, setPlayerName] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const navigate = useNavigate();
 
   const formatTime = (seconds) => {
     const mins = Math.floor(seconds / 60).toString().padStart(2, "0");
@@ -36,6 +38,7 @@ function ScoreSubmissionPopup({ elapsedTime, gameId, onClose }) {
 
       onClose();
       alert("Score submitted! Thank you for playing.");
+      navigate('/')
     } catch (e) {
       setError(e.message || "Error submitting score");
     } finally {
