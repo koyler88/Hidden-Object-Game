@@ -1,0 +1,15 @@
+.game-page {
+  text-align: center;
+  padding: 2rem;
+}
+
+.game-image-container {
+  position: relative;
+  display: inline-block;
+}
+
+.game-image {
+  max-width: 100%;
+  height: auto;
+  border: 2px solid #ccc;
+}
