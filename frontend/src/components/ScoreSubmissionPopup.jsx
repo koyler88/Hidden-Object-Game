@@ -1,4 +1,6 @@
 import { useState } from "react";
+
+const BASE_URL = import.meta.env.VITE_API_BASE_URL;
 import { useNavigate } from "react-router-dom";
 
 function ScoreSubmissionPopup({ elapsedTime, gameId, onClose }) {
@@ -22,7 +24,7 @@ function ScoreSubmissionPopup({ elapsedTime, gameId, onClose }) {
     setError("");
 
     try {
-      const res = await fetch("http://localhost:3000/scores", {
+  const res = await fetch(`${BASE_URL}/scores`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
