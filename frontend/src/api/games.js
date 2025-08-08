@@ -1,6 +1,6 @@
 const BASE_URL = 'http://localhost:3000'
 
-export async function getGame(id) {
+export async function fetchGameById(id) {
     const res = await fetch(`${BASE_URL}/games/${id}`);
     if (!res.ok) throw new Error("Failed to fetch game");
     return res.json()
