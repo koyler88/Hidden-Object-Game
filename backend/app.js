@@ -2,8 +2,13 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const PORT = process.env.PORT || 3000;
-const cors = require('cors')
-app.use(cors({ origin: 'http://koyler88.github.io'}))
+const cors = require("cors");
+
+app.use(
+  cors({
+    origin: "https://koyler88.github.io",
+  })
+);
 
 // Routers
 const gamesRouter = require("./routes/gamesRouter");
